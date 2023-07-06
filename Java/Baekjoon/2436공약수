@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st =  new StringTokenizer(br.readLine());
+		int gcd = Integer.parseInt(st.nextToken());
+		int lcm = Integer.parseInt(st.nextToken());
+		int max = lcm/gcd;
+		int num1 = 1;
+		int num2 = max;
+		int min = 1 + max;
+		// 가능한 서로소 찾기
+		for(int i = 2; i < Math.sqrt(max); i++) {
+			if(max % i == 0) {
+				boolean flag = true;
+				for(int j = 2; j < Math.sqrt(max/i); j++) {
+					if(i % j == 0 && max/i % j == 0) {
+						flag = false;
+					}
+				}
+				if(!flag) continue;
+				if(min > i + max/i) {
+					min = i + max/i;
+					num1 = i;
+					num2 = max/i;
+				}
+			}
+		}
+		System.out.println(num1 * gcd + " " + num2 * gcd);
+	}
+}
+
+// https://www.acmicpc.net/problem/2436 
